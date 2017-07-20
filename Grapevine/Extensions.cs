@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
-using System.Linq;
-using Grapevine.Blockchain;
 
 namespace Grapevine
 {

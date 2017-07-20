@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 
-namespace Grapevine.Blockchain
+namespace Grapevine
 {
     public class Hash
     {

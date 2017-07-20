@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Grapevine.Blockchain
 {
     // aka opcode
-    public enum OperationCode : byte
+    public enum OperationCode : Byte
     {
         Claim = 0,
         Fee,
