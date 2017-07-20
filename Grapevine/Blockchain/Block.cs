@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
+using System.Linq;
 
 namespace Grapevine.Blockchain
 {
-    public class Block
+    public class Block : IEnumerable<Transaction>, IHashIdentifier, IVerifiable
     {
-        // The hash of a block
-        public Hash BlockHash { get; set; }
+        public Hash Identifier => Header.Identifier;
+
         // The header of a block
         public BlockHeader Header { get; set; }
         // The height of a block
@@ -15,9 +18,18 @@ namespace Grapevine.Blockchain
 
         public List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
-        // Block verification
-        public bool IsValid =>
-            Header.CompactTarget <= Header.CompactTarget // todo: proper
-            && Header.GenerateProof() == BlockHash;
+        public IEnumerator<Transaction> GetEnumerator() => Transactions.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public Transaction this[string digest] => Transactions.FirstOrDefault(tx => tx.GetProof().ToString() == digest);
+        public Transaction this[int idx] => Transactions.OrderBy(tx => tx.Timestamp).ElementAtOrDefault(idx);
+
+        public bool IsValid(Ledger blockchain)
+        {
+            // A block is valid if all transactions in the block is valid
+            if (!Transactions.All(tx => tx.IsValid(blockchain)))
+                return false;
+            throw new BlockIntegrityException();
+        }
     }
 }

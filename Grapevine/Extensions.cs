@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Linq;
+using Grapevine.Blockchain;
 
 namespace Grapevine
 {
@@ -18,7 +19,6 @@ namespace Grapevine
                 bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
             return bytes;
         }
-
 
         public static Hash GetMerkleRoot(this IEnumerable<Hash> nodes)
         {
