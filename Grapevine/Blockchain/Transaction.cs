@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace Grapevine.Blockchain
 {
@@ -26,7 +27,7 @@ namespace Grapevine.Blockchain
                 bw.Write((byte[])Output);
                 bw.Write((UInt64)Value);
 
-                return Hash.HashTwice(ms.ToArray());
+                return HashUtil.ComputeSHA256(HashUtil.ComputeSHA256(ms.ToArray()));
             }
         }
 
