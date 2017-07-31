@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
+using System.Linq;
 
 namespace Grapevine
 {
@@ -20,28 +21,38 @@ namespace Grapevine
 
         public static Hash GetMerkleRoot(this IEnumerable<Hash> nodes)
         {
-            var exterior = new Queue<Hash>(nodes);
-            while (exterior.Count > 1)
+            if (nodes.Count() == 0)
+                return null;
+            if (nodes.Count() == 1)
+                return nodes.FirstOrDefault();
+
+            var merkle = new Queue<Hash>();
+            while (merkle.Count > 1)
             {
-                var interior = new Queue<Hash>();
-                while (exterior.Count > 1)
+                // Create a copy of the last entry if we have an odd number of entries
+                if (merkle.Count % 2 == 1)
+                    merkle.Enqueue(new Hash(merkle.Last().Digest));
+
+                // Start creating our next layer
+                var nextMerkle = new Queue<Hash>();
+                while (merkle.Count > 0)
                 {
-                    using (var hasher = SHA256.Create())
                     using (var ms = new MemoryStream())
+                    using (var bw = new BinaryWriter(ms))
                     {
-                        using (var bw = new BinaryWriter(ms))
-                        {
-                            bw.Write((byte[])exterior.Dequeue());
-                            bw.Write((byte[])exterior.Dequeue());
-                        }
-                        interior.Enqueue(hasher.ComputeHash(ms.ToArray()));
+                        // We can assume merkle was even to start with
+                        // => it will keep on being even if we always dequeue 2 at a time
+                        bw.Write((byte[])merkle.Dequeue());
+                        bw.Write((byte[])merkle.Dequeue());
+
+                        nextMerkle.Enqueue(HashUtil.Compute(HashUtil.Compute(ms.ToArray())));
                     }
+
                 }
-                if (exterior.Count == 1)
-                    interior.Enqueue(exterior.Dequeue());
-                exterior = interior;
+                merkle = nextMerkle;
             }
-            return exterior.Dequeue();
+
+            return merkle.Dequeue();
         }
     }
 }

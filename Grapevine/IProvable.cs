@@ -1,6 +1,6 @@
 ﻿namespace Grapevine
 {
-    interface IProvable
+    public interface IProvable
     {
         Hash GetProof();
     }

@@ -1,6 +1,6 @@
 ﻿namespace Grapevine.Blockchain
 {
-    interface IVerifiable
+    public interface IVerifiable
     {
         bool IsValid(Ledger blockchain);
     }

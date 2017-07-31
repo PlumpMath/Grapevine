@@ -17,7 +17,7 @@ namespace Grapevine
         public BigInteger ToBigInteger()
         {            
             var bytes = Digest;            
-            // BigInteger expects SmallEndian
+            // Little Endian for Big Integers
             Array.Reverse(bytes);
 
             // Appending 0x00 to the end forces it to become unsigned

@@ -1,6 +1,6 @@
 ﻿namespace Grapevine
 {
-    interface IHashIdentifier
+    public interface IHashIdentifier
     {
         Hash Identifier { get; }
     }

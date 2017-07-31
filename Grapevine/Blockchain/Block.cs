@@ -38,7 +38,7 @@ namespace Grapevine.Blockchain
                 bw.Write((UInt32)Throttle);
                 bw.Write((UInt32)Nonce);
 
-                return HashUtil.ComputeSHA256(HashUtil.ComputeSHA256(ms.ToArray()));
+                return HashUtil.Compute(HashUtil.Compute(ms.ToArray()));
             }
         }
 

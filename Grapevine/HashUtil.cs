@@ -8,8 +8,11 @@ namespace Grapevine
 {
     public static class HashUtil
     {
-        private static HashAlgorithm _sha256 = SHA256.Create();
-        public static byte[] ComputeSHA256(params byte[][] args) => ComputeSHA256(args.SelectMany(b => b).ToArray());
-        public static byte[] ComputeSHA256(byte[] buffer) => _sha256.ComputeHash(buffer);
+        public static HashAlgorithm Algorithm { get; set; } = SHA256.Create();
+
+        public static byte[] Compute(params byte[][] args) => Compute(args.SelectMany(b => b).ToArray());
+        public static byte[] Compute(byte[] buffer) => Algorithm.ComputeHash(buffer);
+
+        public static byte[] GrapeCompute(byte[] buffer) => Algorithm.ComputeHash(Algorithm.ComputeHash(buffer));
     }
 }
