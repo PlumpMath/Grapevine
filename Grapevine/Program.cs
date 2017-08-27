@@ -47,31 +47,7 @@ namespace Grapevine
 
         private static void TestWallet()
         {
-            var wallet = new Wallet();
-            var wk = WalletKey.Create();
-            wallet.Keys.Add(wk);
 
-            var signedMessage = "Wallet Test 2017";
-            var unsignedMessage = "Tallet West 1720";
-
-            Console.WriteLine($"Signing message '{signedMessage}'...");
-            var signature = wk.DSA.SignData(Encoding.UTF8.GetBytes(signedMessage), HashAlgorithmName.SHA256);
-            Console.WriteLine($"Signature: {(Hash)signature}");
-            {
-                Console.WriteLine($"Signature matches '{signedMessage}': {wk.DSA.VerifyData(Encoding.UTF8.GetBytes(signedMessage), signature, HashAlgorithmName.SHA256)}");
-            }
-            {
-                Console.WriteLine($"Signature matches '{unsignedMessage}': {wk.DSA.VerifyData(Encoding.UTF8.GetBytes(unsignedMessage), signature, HashAlgorithmName.SHA256)}");
-            }
-
-            Console.WriteLine("Exporting->importing key");
-            var wk1 = new WalletKey(wallet.FirstOrDefault().DSA.ExportExplicitParameters(true));
-            {
-                Console.WriteLine($"Signature matches '{signedMessage}': {wk1.DSA.VerifyData(Encoding.UTF8.GetBytes(signedMessage), signature, HashAlgorithmName.SHA256)}");
-            }
-            {
-                Console.WriteLine($"Signature matches '{unsignedMessage}': {wk1.DSA.VerifyData(Encoding.UTF8.GetBytes(unsignedMessage), signature, HashAlgorithmName.SHA256)}");
-            }
 
         }
 

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grapevine", "Grapevine\Grapevine.csproj", "{0FB9B10F-8EBA-4D1E-A002-1D76CA20FB9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grapevine.Tests", "Grapevine.Tests\Grapevine.Tests.csproj", "{5D4C44F6-4197-4369-8F58-305B22373B2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grapevine.Tests", "Grapevine.Tests\Grapevine.Tests.csproj", "{E3DFD87F-3C8A-4DB2-90D8-3C0117CEDDF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +17,15 @@ Global
 		{0FB9B10F-8EBA-4D1E-A002-1D76CA20FB9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FB9B10F-8EBA-4D1E-A002-1D76CA20FB9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FB9B10F-8EBA-4D1E-A002-1D76CA20FB9B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D4C44F6-4197-4369-8F58-305B22373B2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D4C44F6-4197-4369-8F58-305B22373B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D4C44F6-4197-4369-8F58-305B22373B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D4C44F6-4197-4369-8F58-305B22373B2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3DFD87F-3C8A-4DB2-90D8-3C0117CEDDF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3DFD87F-3C8A-4DB2-90D8-3C0117CEDDF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3DFD87F-3C8A-4DB2-90D8-3C0117CEDDF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3DFD87F-3C8A-4DB2-90D8-3C0117CEDDF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {80F9C06F-A6AE-4480-9564-66E45F1DD912}
 	EndGlobalSection
 EndGlobal
