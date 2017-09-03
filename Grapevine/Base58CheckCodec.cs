@@ -20,5 +20,8 @@ namespace Grapevine
         {
             return Enumerable.Repeat<byte>(0, encoded.TakeWhile(c => c == '1').Count()).Concat(base.Decode(encoded)).ToArray();
         }
+
+        public bool Validate(string encoded) => Validate(Decode(encoded));
+        public bool Validate(byte[] data) => HashUtil.Compute(HashUtil.Compute(data.SkipLast(4).ToArray())).TakeLast(4).SequenceEqual(data.TakeLast(4));
     }
 }

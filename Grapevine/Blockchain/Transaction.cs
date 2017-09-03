@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 
@@ -11,9 +12,8 @@ namespace Grapevine.Blockchain
         private UInt32 TxVersion { get; set; } = 0;
         public DateTime Timestamp { get; set; }
         public OperationCode OpCode { get; set; }
-        public Hash Input { get; set; }
-        public Hash Output { get; set; }
-        public UInt64 Value { get; set; }
+        public List<Tuple<string, UInt64>> Inputs { get; } = new List<Tuple<string, ulong>>();
+        public List<Tuple<string, UInt64>> Outputs { get; } = new List<Tuple<string, ulong>>();
 
         public Hash GetProof()
         {
@@ -23,9 +23,20 @@ namespace Grapevine.Blockchain
                 bw.Write((UInt32)TxVersion);
                 bw.Write((UInt32)Timestamp.ToEpoch());
                 bw.Write((byte)OpCode);
-                bw.Write((byte[])Input);
-                bw.Write((byte[])Output);
-                bw.Write((UInt64)Value);
+
+                bw.Write((UInt32)Inputs.Count);
+                foreach (var (address, amount) in Inputs)
+                {
+                    bw.Write((string)address);
+                    bw.Write((UInt64)amount);
+                }
+
+                bw.Write((UInt32)Outputs.Count);
+                foreach (var (address, amount) in Outputs)
+                {
+                    bw.Write((string)address);
+                    bw.Write((UInt64)amount);
+                }
 
                 return HashUtil.Compute(HashUtil.Compute(ms.ToArray()));
             }

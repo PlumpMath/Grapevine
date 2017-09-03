@@ -15,60 +15,45 @@ namespace Grapevine
         {
             var ledger = new Ledger();
 
-            //TestBaseCodec();
-            TestBase58();
-            //TestWallet();
             //TestSpeed();
 
-            //while (true)
-            //{
-            //    var txout = new byte[32];
-            //    using (var rng = RandomNumberGenerator.Create())
-            //        rng.GetBytes(txout);
+            while (true)
+            {
+                var key = WalletKey.Create();
 
-            //    var txs = new List<Transaction>()
-            //    {
-            //        new Transaction() {
-            //            OpCode = OperationCode.Claim,
-            //            Timestamp = DateTime.UtcNow,
-            //            Input = "00".ToHash(),
-            //            Output = txout,
-            //            Value = 50
-            //        },
-            //    };
+                var txs = new List<Transaction>()
+                {
+                    new Transaction() {
+                        OpCode = OperationCode.Claim,
+                        Timestamp = DateTime.UtcNow,
+                    },
+                };
 
-            //    Block mined = null;
-            //    while (!ledger.ProcessBlock(mined))
-            //        mined = ledger.CreateBlock(txs);
-            //}
+                txs.First().Outputs.Add(Tuple.Create<string, ulong>(key.Address, 50 * 100_000));
+
+                Block mined = null;
+                while (!ledger.ProcessBlock(mined))
+                    mined = ledger.CreateBlock(txs);
+            }
 
             Console.ReadKey();
-        }
-
-        private static void TestWallet()
-        {
-
-
         }
 
         private static void TestSpeed()
         {
             const uint ITERATIONS = 10_000_000;
 
-            var txout = new byte[32];
-            using (var rng = RandomNumberGenerator.Create())
-                rng.GetBytes(txout);
+            var key = WalletKey.Create();
 
             var txs = new List<Transaction>()
             {
                 new Transaction() {
                     OpCode = OperationCode.Claim,
                     Timestamp = DateTime.UtcNow,
-                    Input = "00".ToHash(),
-                    Output = txout,
-                    Value = 50
                 },
             };
+
+            txs.First().Outputs.Add(Tuple.Create<string, ulong>(key.Address, 50 * 100_000));
 
             var blk = new Block
             {
@@ -94,49 +79,6 @@ namespace Grapevine
             //    sw.Stop();
             //    Console.WriteLine($"1000000 GetAltProof {sw.Elapsed}");
             //}
-        }
-
-        private static void TestBase58()
-        {
-            var b58 = new Base58CheckCodec();
-            {
-                var addrZero = new byte[20];
-                var toBase = b58.Encode(new byte[20]);
-                Console.WriteLine($"{toBase} ({toBase.Length})");
-                var fromBase = b58.Decode(toBase);
-                Console.WriteLine($"{(Hash)fromBase} ({fromBase.Length})");
-            }
-
-            {
-                var wk = WalletKey.Create();
-                var pubKey = wk.PublicKey;
-                var pubKeyEncoded = b58.Encode(pubKey);
-                var pubKeyDecoded = b58.Decode(pubKeyEncoded);
-
-                //Console.WriteLine($"{(Hash)pubKey} -> {pubKeyEncoded}");
-                //Console.WriteLine($"{pubKeyEncoded} -> {(Hash)pubKeyDecoded}");
-                //Console.WriteLine($"{(Hash)pubKey} ?= {(Hash)pubKeyDecoded}");
-
-                Console.WriteLine((Hash)pubKey);
-                Console.WriteLine(pubKeyEncoded);
-                Console.WriteLine((Hash)pubKeyDecoded);
-            }
-
-
-        }
-
-        private static void TestBaseCodec()
-        {
-            {
-                var b58 = new Base58CheckCodec();
-                var bytes = new byte[] { 0x0, 0x0, 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF };
-                var encoded = b58.Encode(bytes);
-                var decoded = b58.Decode(encoded);
-
-                Console.WriteLine((Hash)bytes);
-                Console.WriteLine(encoded);
-                Console.WriteLine((Hash)decoded);
-            }
         }
     }
 }
