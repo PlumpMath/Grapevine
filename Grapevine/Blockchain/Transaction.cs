@@ -12,8 +12,10 @@ namespace Grapevine.Blockchain
         private UInt32 TxVersion { get; set; } = 0;
         public DateTime Timestamp { get; set; }
         public OperationCode OpCode { get; set; }
-        public List<Tuple<string, UInt64>> Inputs { get; } = new List<Tuple<string, ulong>>();
-        public List<Tuple<string, UInt64>> Outputs { get; } = new List<Tuple<string, ulong>>();
+        public List<Tuple<string, UInt64>> Inputs { get; }
+            = new List<Tuple<string, ulong>>();
+        public List<Tuple<string, UInt64>> Outputs { get; }
+            = new List<Tuple<string, ulong>>();
 
         public Hash GetProof()
         {

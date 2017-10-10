@@ -16,27 +16,38 @@ namespace Grapevine
             var ledger = new Ledger();
 
             //TestSpeed();
+            MineAddresses();
 
+            //while (true)
+            //{
+            //    var key = WalletKey.Create();
+
+            //    var txs = new List<Transaction>()
+            //    {
+            //        new Transaction() {
+            //            OpCode = OperationCode.Claim,
+            //            Timestamp = DateTime.UtcNow,
+            //        },
+            //    };
+
+            //    txs.First().Outputs.Add(Tuple.Create<string, ulong>(key.Address, 50 * 100_000));
+
+            //    Block mined = null;
+            //    while (!ledger.ProcessBlock(mined))
+            //        mined = ledger.CreateBlock(txs);
+            //}
+
+            Console.ReadKey();
+        }
+
+        private static void MineAddresses()
+        {
             while (true)
             {
                 var key = WalletKey.Create();
-
-                var txs = new List<Transaction>()
-                {
-                    new Transaction() {
-                        OpCode = OperationCode.Claim,
-                        Timestamp = DateTime.UtcNow,
-                    },
-                };
-
-                txs.First().Outputs.Add(Tuple.Create<string, ulong>(key.Address, 50 * 100_000));
-
-                Block mined = null;
-                while (!ledger.ProcessBlock(mined))
-                    mined = ledger.CreateBlock(txs);
+                if (key.Address.StartsWith("1Onur"))
+                    Console.WriteLine(key.Address);
             }
-
-            Console.ReadKey();
         }
 
         private static void TestSpeed()
@@ -58,7 +69,10 @@ namespace Grapevine
             var blk = new Block
             {
                 PreviousBlock = "00".ToHash(),
-                TxMerkleRoot = txs.OrderBy(tx => tx.Timestamp).Select(tx => tx.GetProof()).GetMerkleRoot(),
+                TxMerkleRoot = txs
+                    .OrderBy(tx => tx.Timestamp)
+                    .Select(tx => tx.GetProof())
+                    .GetMerkleRoot(),
                 Timestamp = DateTime.UtcNow,
                 Throttle = 0,
                 Transactions = txs.ToList(),

@@ -9,7 +9,7 @@ namespace Grapevine.Blockchain
 {
     public class Ledger : IEnumerable<Block>, IVerifiable
     {
-        private static TimeSpan s_RetargetTimespan = TimeSpan.FromMinutes(5);
+        private static TimeSpan s_RetargetTimespan = TimeSpan.FromMinutes(10);
         private static uint s_RetargetBlockspan = 512;
 
         public Ledger()
@@ -103,7 +103,8 @@ namespace Grapevine.Blockchain
 
 
 
-        public Block FindBlockByDepth(ulong depth) => FindBlockByHeight(Head.BlockHeight - depth);
+        public Block FindBlockByDepth(ulong depth) =>
+            FindBlockByHeight(Head.BlockHeight - depth);
         /*
         public Block FindBlockByDepth(ulong depth)
         {
@@ -114,7 +115,8 @@ namespace Grapevine.Blockchain
         }
         */
 
-        public Block FindBlockByHeight(ulong height) => Blocks.FirstOrDefault(b => b.BlockHeight == height);
+        public Block FindBlockByHeight(ulong height) =>
+            Blocks.FirstOrDefault(b => b.BlockHeight == height);
         /*
         public Block FindBlockByHeight(ulong height)
         {
@@ -132,17 +134,25 @@ namespace Grapevine.Blockchain
 
         public Block Head { get; private set; }
 
-        public List<Block> Blocks { get; private set; } = new List<Block>();
+        public List<Block> Blocks { get; private set; }
+            = new List<Block>();
 
-        public IEnumerator<Block> GetEnumerator() => Blocks.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public IEnumerator<Block> GetEnumerator() =>
+            Blocks.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() =>
+            GetEnumerator();
 
-        public Block this[Hash hash] => Blocks.FirstOrDefault(b => b.Identifier == hash);
-        public Block this[string digest] => this[digest.ToHash()];
-        public Block this[ulong height] => Blocks.FirstOrDefault(b => b.BlockHeight == height);
+        public Block this[Hash hash] =>
+            Blocks.FirstOrDefault(b => b.Identifier == hash);
+        public Block this[string digest] =>
+            this[digest.ToHash()];
+        public Block this[ulong height] =>
+            Blocks.FirstOrDefault(b => b.BlockHeight == height);
 
-        public Block GetPrevious(Block block) => this[block.PreviousBlock];
+        public Block GetPrevious(Block block) =>
+            this[block.PreviousBlock];
 
-        public bool IsValid(Ledger blockchain) => Blocks.All(b => b.IsValid(this));
+        public bool IsValid(Ledger blockchain) =>
+            Blocks.All(b => b.IsValid(this));
     }
 }
